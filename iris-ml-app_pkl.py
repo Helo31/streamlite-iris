@@ -1,9 +1,11 @@
 # Codes adapted from https://github.com/dataprofessor/code/tree/master/streamlit/part2
 
+
 import streamlit as st
 import pandas as pd
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
+import joblib
 
 st.write("""
 # Simple Iris Flower Prediction App
@@ -34,13 +36,15 @@ iris = datasets.load_iris()
 X = iris.data
 y = iris.target
 
-clf = RandomForestClassifier()
-clf.fit(X,y)
+file_path = 'model_SVM.pkl'
+model = joblib.load(file_path)
+
+model.fit(X,y)
 
 # Apply model to make predictions
 
-prediction = clf.predict(df)
-prediction_proba = clf.predict_proba(df)
+prediction = model.predict(df)
+# prediction_proba = model.predict_proba(df)
 
 st.subheader('Class labels and their corresponding index number')
 st.write(iris.target_names)
@@ -48,5 +52,5 @@ st.write(iris.target_names)
 st.subheader('Prediction')
 st.write(iris.target_names[prediction])
 
-st.subheader('Prediction Probability')
-st.write(prediction_proba)
+# st.subheader('Prediction Probability')
+# st.write(prediction_proba)
